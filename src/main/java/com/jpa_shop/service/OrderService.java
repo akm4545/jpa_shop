@@ -9,6 +9,7 @@ import com.jpa_shop.domain.Delivery;
 import com.jpa_shop.domain.Member;
 import com.jpa_shop.domain.Order;
 import com.jpa_shop.domain.OrderItem;
+import com.jpa_shop.domain.OrderSearch;
 import com.jpa_shop.domain.item.Item;
 import com.jpa_shop.repository.MemberRepository;
 import com.jpa_shop.repository.OrderRepository;
@@ -57,7 +58,7 @@ public class OrderService {
 		order.cancel();
 	}
 	
-	//미완성
+	//검색조건을 담고있는 객체로 검색 실행
 	public List<Order> findOrders(OrderSearch orderSearch){
 		return orderRepository.findAll(orderSearch);
 	}
