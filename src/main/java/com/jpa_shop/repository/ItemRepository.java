@@ -38,9 +38,9 @@ public class ItemRepository {
 	
 	//모든 아이템 불러오기
 	public List<Item> findAll() {
-		return em.createQuery("SELECT"
-				+ "i" //별칭으로 조회 - 조건이 없으므로 모두 조회
-				+ "FROM"
+		return em.createQuery("SELECT "
+				+ "i " //별칭으로 조회 - 조건이 없으므로 모두 조회
+				+ "FROM "
 				+ "Item i", Item.class) //Item 클래스의 별칭 i 
 				.getResultList();
 	}
