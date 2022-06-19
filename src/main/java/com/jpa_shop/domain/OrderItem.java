@@ -28,7 +28,7 @@ public class OrderItem {
 	//다대일 관계, 지연로딩 사용
 	@JoinColumn(name = "ITEM_ID")
 	//외래키의 실 소유
-	private Item itme;
+	private Item item;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	//다대일 관계, 지연로딩 사용
@@ -39,7 +39,37 @@ public class OrderItem {
 	private int orderPrice;
 	
 	private int count;
+	
+	//생성 메서드
+	public static OrderItem createOrderItem(Item item, int orderPrice,
+			int count) {
+		//주문 상품의 정보를 담을 엔티티 생성
+		OrderItem orderItem = new OrderItem();
+		
+		//상품의 정보를 담음
+		orderItem.setItem(item);
+		//상품의 가격을 담음
+		orderItem.setOrderPrice(orderPrice);
+		//상품의 주문 수량을 담음
+		orderItem.setCount(count);
+		
+		//상품의 재고량 차감
+		item.removeStock(count);
+		
+		return orderItem;
+	}
+	
+	//비즈니스 로직
+	public void cancel() {
+		//주문하려던 상품의 정보를 가져와 재고를 복구시킨다
+		getItem().addStock(count);
+	}
 
+	//수량을 곱한 총 가격을 가져옴
+	public int getTotalPrice() {
+		return getOrderPrice() * getCount();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -48,12 +78,12 @@ public class OrderItem {
 		this.id = id;
 	}
 
-	public Item getItme() {
-		return itme;
+	public Item getItem() {
+		return item;
 	}
 
-	public void setItme(Item itme) {
-		this.itme = itme;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	public Order getOrder() {
@@ -82,7 +112,7 @@ public class OrderItem {
 
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", itme=" + itme + ", order=" + order + ", orderPrice=" + orderPrice + ", count="
+		return "OrderItem [id=" + id + ", item=" + item + ", order=" + order + ", orderPrice=" + orderPrice + ", count="
 				+ count + "]";
 	}
 }

@@ -51,6 +51,61 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	//배송 상태를 열거형으로 관리, STRING시 직접 입력 (순차적 x)
 	private OrderStatus status;
+	
+	//생성 메서드
+	public static Order createOrder(Member member, Delivery delivery,
+			OrderItem... orderItems) {
+		//모든 정보를 담아 반환할 엔티티 생성
+		Order order = new Order();
+		
+		//멤버 엔티티 담기
+		order.setMember(member);
+		//배송지 정보 엔티티 담기
+		order.setDelivery(delivery);
+		//주문 상태 담기
+		order.setStatus(OrderStatus.ORDER);
+		//주문일 담기
+		order.setOrderDate(new Date());
+		
+		//주문 상품을 가변배열로 받아 처리
+		//향상된 for문
+		for(OrderItem orderItem : orderItems) {
+			//생성한 주문 건에 주문상품을 차례대로 담는다
+			order.addOrderItem(orderItem);
+		}
+		
+		return order;
+	}
+	
+	//비즈니스 로직
+	//주문 취소
+	public void cancel() {
+		//데이터 검증
+		//이미 배송 완료건은 취소 불가
+		if(delivery.getStatsus() == DeliveryStatus.COMP) {
+			throw new RuntimeException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+		}
+		
+		//주문 상태 취소로 변경
+		this.setStatus(OrderStatus.CANCEL);
+		
+		//현재 취소 주문건에 대한 상품들 모두 취소처리
+		for(OrderItem orderItem : orderItems) {
+			orderItem.cancel();
+		}
+	}
+	
+	//상품 총액
+	public int getTotalPrice() {
+		int totalPrice = 0;
+		
+		//가격 가져옴
+		for(OrderItem orderItem : orderItems) {
+			totalPrice += orderItem.getTotalPrice();
+		}
+		
+		return totalPrice;
+	}
 
 	public Long getId() {
 		return id;

@@ -32,6 +32,13 @@ public class Delivery {
 	@Enumerated(EnumType.STRING)
 	//열거형으로 배송상태 표시 - 직접 입력 방식
 	private DeliveryStatus statsus;
+	
+	public Delivery() {}
+	
+	public Delivery(Address address) {
+		this.address = address;
+		this.statsus = DeliveryStatus.READY;
+	}
 
 	public Long getId() {
 		return id;
