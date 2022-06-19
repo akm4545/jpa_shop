@@ -16,6 +16,7 @@ public class ItemController {
 	
 	@RequestMapping(value = "/items/new", method = RequestMethod.GET)
 	public String createForm() {
+		System.out.println("aa");
 		return "items/createItemForm";
 	}
 	

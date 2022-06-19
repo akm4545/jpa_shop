@@ -20,7 +20,7 @@ public class OrderItem {
 	//PK
 	@GeneratedValue
 	//벨류 자동 생성
-	@Column(name = "ITEM_ID")
+	@Column(name = "ORDER_ITEM_ID")
 	//컬럼 매핑
 	private Long id;
 	
