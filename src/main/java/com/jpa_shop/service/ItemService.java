@@ -1,6 +1,7 @@
 package com.jpa_shop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,13 @@ public class ItemService {
 	
 	//식별자 기준으로 조회
 	public Item findOne(Long itemId) {
-		return itemRepository.findOne(itemId);
+		//ID 기준으로 가져오는 코드가 변경됨
+		//Optional<Item> opt = itemRepository.findById(itemId);
+		//옵셔널 객체 반환 (래퍼 클래스)
+		
+		//옵셔널 객체의 값을 꺼내서 반환
+		return itemRepository.findById(itemId).get();
+		
+//		return itemRepository.findOne(itemId);
 	}
 }

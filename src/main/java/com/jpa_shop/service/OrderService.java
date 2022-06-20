@@ -32,7 +32,7 @@ public class OrderService {
 	//주문정보 저장
 	public Long order(Long memberId, Long itemId, int count) {
 		//멤버정보 가져옴
-		Member member = memberRepository.findOne(memberId);
+		Member member = memberRepository.findById(memberId).get();
 		//상품 정보 가져옴
 		Item item = itemService.findOne(itemId);
 		
@@ -52,7 +52,7 @@ public class OrderService {
 	
 	public void cancelOrder(Long orderId) {
 		//주문 정보를 가져옴
-		Order order = orderRepository.findOne(orderId);
+		Order order = orderRepository.findById(orderId).get();
 		
 		//상태 변경 - 영속화 및 DB 저장
 		order.cancel();
@@ -60,6 +60,7 @@ public class OrderService {
 	
 	//검색조건을 담고있는 객체로 검색 실행
 	public List<Order> findOrders(OrderSearch orderSearch){
-		return orderRepository.findAll(orderSearch);
+		//검색조건 반환 메서드를 실행해서 넘기도록 변경
+		return orderRepository.findAll(orderSearch.toSpecification());
 	}
 }

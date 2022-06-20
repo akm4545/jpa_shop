@@ -54,6 +54,11 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<dependency>
+   			<groupId>org.springframework.data</groupId>
+   			<artifactId>spring-data-jpa</artifactId>
+		</dependency>
+		
 		<!-- 스프링 ORM -->
         <dependency>
             <groupId>org.springframework</groupId>
